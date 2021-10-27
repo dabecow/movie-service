@@ -16,22 +16,22 @@ public class Movie implements IEntity<Long>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id", nullable = false)
-    Long id;
+    private Long id;
 
     @Getter
     @Setter
     @Column(name = "movie_title", nullable = false)
-    String title;
+    private String title;
 
     @Getter
     @Setter
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Getter
     @Setter
     @Column(name = "release_date")
-    LocalDate releaseDate;
+    private LocalDate releaseDate;
 
     @Getter
     @ManyToMany
@@ -40,7 +40,7 @@ public class Movie implements IEntity<Long>{
                 joinColumns = @JoinColumn(name="movie_id"),
                 inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    Set<Actor> actors = new HashSet<>();
+    private Set<Actor> actors = new HashSet<>();
 
     @Getter
     @ManyToMany
@@ -49,7 +49,7 @@ public class Movie implements IEntity<Long>{
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    Set<Genre> genres = new HashSet<>();
+    private Set<Genre> genres = new HashSet<>();
 
     public Movie(String title) {
         this.title = title;
