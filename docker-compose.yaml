@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  app:
+    container_name: app
+    image: movie-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    build:
+      context: .
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=movie-service
