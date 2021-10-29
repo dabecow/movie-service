@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.movies.dto.ActorDto;
 import org.movies.dto.GenreDto;
 import org.movies.dto.MovieDto;
+import org.movies.infrastructure.aop.LogToQueue;
 import org.movies.mapper.MovieMapper;
 import org.movies.model.*;
 import org.movies.repository.MovieRepository;
@@ -38,6 +39,7 @@ public class MovieService implements IMovieService{
 
     //TODO: reduce findAll methods so here will be only one method
     @Override
+    @LogToQueue
     public PageableResponse<MovieDto> findAll(Pageable pageable){
         Page<Movie> page = movieRepository.findAll(pageable);
 
