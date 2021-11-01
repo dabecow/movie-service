@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     platform: postgres
-    url: jdbc:postgresql://postgres:5432/
+    url: jdbc:postgresql://postgres:5432/movie-service
     username: postgres
     password: test
     driver-class-name: org.postgresql.Driver
@@ -14,8 +14,10 @@ spring:
   jpa:
     properties:
       hibernate:
+        default_schema: movies
         temp:
           use_jdbc_metadata_defaults: 'false'
+
     show-sql: true
     database: POSTGRESQL
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect

@@ -8,7 +8,7 @@
 
     <changeSet id="Andrei:2" author="Andrei">
         <createTable tableName="actor" schemaName="movies">
-            <column name="id" type="BIGSERIAL">
+            <column name="actor_id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="actor_pkey"/>
             </column>
             <column name="actor_name" type="VARCHAR(100)">
@@ -60,7 +60,7 @@
     <!--  Many to many tables  -->
 
     <changeSet id="Andrei:5" author="Andrei">
-        <createTable tableName="movie_actor">
+        <createTable tableName="movie_actor" schemaName="movies">
 
             <column name="movie_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -94,7 +94,7 @@
     </changeSet>
 
     <changeSet id="Andrei:6" author="Andrei">
-        <createTable tableName="movie_genre">
+        <createTable tableName="movie_genre" schemaName="movies">
 
             <column name="movie_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
