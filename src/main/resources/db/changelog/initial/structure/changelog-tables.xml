@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <!-- actor table -->
+
+    <changeSet id="Andrei:2" author="Andrei">
+        <createTable tableName="actor" schemaName="movies">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="actor_pkey"/>
+            </column>
+            <column name="actor_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="actor" schemaName="movies"/>
+        </rollback>
+    </changeSet>
+
+    <!--  genre table  -->
+
+    <changeSet id="Andrei:3" author="Andrei">
+        <createTable tableName="genre" schemaName="movies">
+            <column name="genre_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="genre_pkey"/>
+            </column>
+            <column name="genre_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="genre" schemaName="movies"/>
+        </rollback>
+    </changeSet>
+
+    <!--  movie table  -->
+
+    <changeSet id="Andrei:4" author="Andrei">
+        <createTable tableName="movie" schemaName="movies">
+            <column name="movie_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="movie_pkey"/>
+            </column>
+            <column name="movie_title" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(512)"/>
+            <column name="release_date" type="DATE"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="movie" schemaName="movies"/>
+        </rollback>
+    </changeSet>
+
+    <!--  Many to many tables  -->
+
+    <changeSet id="Andrei:5" author="Andrei">
+        <createTable tableName="movie_actor">
+
+            <column name="movie_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="actor_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="movie_actor"
+                baseColumnNames="movie_id"
+                baseTableSchemaName="movies"
+                constraintName="fk_movie_actor_movie_id"
+                referencedTableName="movie"
+                referencedColumnNames="movie_id"
+                referencedTableSchemaName="movies"/>
+
+        <addForeignKeyConstraint
+                baseTableName="movie_actor"
+                baseColumnNames="actor_id"
+                baseTableSchemaName="movies"
+                constraintName="fk_movie_actor_actor_id"
+                referencedTableName="actor"
+                referencedColumnNames="actor_id"
+                referencedTableSchemaName="movies"/>
+
+        <rollback>
+            <dropTable tableName="movie_actor"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="Andrei:6" author="Andrei">
+        <createTable tableName="movie_genre">
+
+            <column name="movie_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="genre_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="movie_genre"
+                baseColumnNames="movie_id"
+                baseTableSchemaName="movies"
+                constraintName="fk_movie_genre_movie_id"
+                referencedTableName="movie"
+                referencedColumnNames="movie_id"
+                referencedTableSchemaName="movies"/>
+
+        <addForeignKeyConstraint
+                baseTableName="movie_genre"
+                baseColumnNames="genre_id"
+                baseTableSchemaName="movies"
+                constraintName="fk_movie_genre_actor_id"
+                referencedTableName="genre"
+                referencedColumnNames="genre_id"
+                referencedTableSchemaName="movies"/>
+
+        <rollback>
+            <dropTable tableName="movie_genre"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

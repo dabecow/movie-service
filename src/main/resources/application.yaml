@@ -22,8 +22,7 @@ spring:
     open-in-view: false
     generate-ddl: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
 
   liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
-#    default-schema: movie_service
+    change-log: classpath:/db/changelog/master-changelog.xml
