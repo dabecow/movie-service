@@ -36,7 +36,7 @@ public class Movie implements IEntity<Long>{
     @Getter
     @ManyToMany
     @JoinTable(
-                name="movie_has_actor",
+                name="movie_actor",
                 joinColumns = @JoinColumn(name="movie_id"),
                 inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
@@ -45,7 +45,7 @@ public class Movie implements IEntity<Long>{
     @Getter
     @ManyToMany
     @JoinTable(
-            name = "movie_has_genre",
+            name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
