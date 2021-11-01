@@ -1,23 +1,35 @@
 package org.movies.infrastructure.mq;
 
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class RabbitConfig {
 
-    public static final String QUEUE_NAME = "Queue";
+    @Value("${spring.rabbitmq.host}")
+    String host;
+    @Value("${spring.rabbitmq.username}")
+    String username;
+    @Value("${spring.rabbitmq.password}")
+    String password;
 
     @Bean
-    public Queue queue(){
-        return new Queue(QUEUE_NAME);
+    CachingConnectionFactory connectionFactory() {
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(host);
+        cachingConnectionFactory.setUsername(username);
+        cachingConnectionFactory.setPassword(password);
+        return cachingConnectionFactory;
     }
 
-//    @Profile("sender")
     @Bean
-    public Sender sender(){
-        return new Sender();
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        return new RabbitTemplate(connectionFactory);
     }
+
 }
